@@ -135,6 +135,7 @@ button {
 }
 /* Styles for product lists */
 .product-card {
+  position: relative;
   flex: 1 1 45%;
   margin: 0.25em;
   padding: 0.5em;
@@ -164,6 +165,27 @@ button {
 
 .product-detail img {
   width: 100%;
+}
+
+.discount-badge {
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  font-size: 0.8em;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.new-price {
+  font-weight: bold;
+  color: black;
 }
 
 /* Start cart list card styles */
@@ -212,6 +234,8 @@ button {
   width: 20px;
   height: 20px;
 }
+
+
 
 @media screen and (min-width: 500px) {
   body {
