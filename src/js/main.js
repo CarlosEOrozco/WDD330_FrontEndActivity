@@ -1,5 +1,10 @@
 import ProductData    from "./ProductData.mjs";
 import ProductListing from "./ProductList";
+import { loadHeaderFooter } from './utils.mjs';
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadHeaderFooter();
+  });
 
 const listElement = document.getElementById("product-list");
 
