@@ -1,9 +1,10 @@
 import ProductData    from "./ProductData.mjs";
 import ProductListing from "./ProductList";
 import { loadHeaderFooter } from './utils.mjs';
+import { renderCartSuperScript } from './cartSuperscript.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadHeaderFooter();
+    loadHeaderFooter(renderCartSuperScript);
   });
 
 const listElement = document.getElementById("product-list");

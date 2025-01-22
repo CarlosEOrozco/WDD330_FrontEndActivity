@@ -1,3 +1,4 @@
+
 // wrapper for querySelector...returns matching element
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
@@ -39,6 +40,8 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
   parentElement.insertAdjacentHTML(position, itemsHTML.join(""));
 }
 
+
+
 // render template
 export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.insertAdjacentHTML("afterbegin", template);
@@ -57,13 +60,14 @@ async function loadTemplate(path) {
 }
 
 // load header and footer
-export async function loadHeaderFooter() {
+export async function loadHeaderFooter(callback) {
+
   const headerTemplate = await loadTemplate('../partials/header.html');
   const footerTemplate = await loadTemplate('../partials/footer.html');
 
   const headerElement = qs('#main-header');
   const footerElement = qs('#main-footer');
 
-  renderWithTemplate(headerTemplate, headerElement);
+  renderWithTemplate(headerTemplate, headerElement, {}, callback);
   renderWithTemplate(footerTemplate, footerElement);
 }
