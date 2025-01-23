@@ -6,9 +6,10 @@ function cartSuperScriptTemplate(count) {
 
 export function renderCartSuperScript() {
   const cartItems = getLocalStorage("so-cart") || [];
-  const element   = document.querySelector(".cart")
+  const element = document.querySelector(".cart");
 
-  element.insertAdjacentHTML("beforeend", cartSuperScriptTemplate(cartItems.length));
+  element.insertAdjacentHTML(
+    "beforeend",
+    cartSuperScriptTemplate(cartItems.length),
+  );
 }
-
-

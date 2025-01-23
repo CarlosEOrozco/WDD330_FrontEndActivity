@@ -1,10 +1,10 @@
 import { getLocalStorage } from "./utils.mjs";
-import { loadHeaderFooter } from './utils.mjs';
-import { renderCartSuperScript } from './cartSuperscript.js';
+import { loadHeaderFooter } from "./utils.mjs";
+import { renderCartSuperScript } from "./cartSuperscript.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    loadHeaderFooter(renderCartSuperScript);
-  });
+document.addEventListener("DOMContentLoaded", () => {
+  loadHeaderFooter(renderCartSuperScript);
+});
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
