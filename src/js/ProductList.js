@@ -13,7 +13,7 @@ function productCardTemplate(product) {
 
   return `<li class="product-card">
             <a href="product_pages/index.html?product=${product.Id}">
-              <img src="${product.Image}" alt="${product.NameWithoutBrand}">
+              <img src="${product.Images.PrimaryMedium}" alt="${product.NameWithoutBrand}">
               <h3 class="card__brand">${product.Brand.Name}</h3>
               <h2 class="card__name">${product.NameWithoutBrand}</h2>
               ${discountBadge}
@@ -38,6 +38,7 @@ export default class ProductListing {
     const filteredList = this.filterList(list);
 
     this.renderList(filteredList);
+    this.updateTitle();
   }
 
   renderList(list) {
@@ -46,5 +47,9 @@ export default class ProductListing {
 
   filterList(list) {
     return list.filter((item) => !this.hiddenProductIds.includes(item.Id));
+  }
+
+  updateTitle() {
+    document.querySelector('h2').textContent = `Top Products: ${this.category}`;
   }
 }
