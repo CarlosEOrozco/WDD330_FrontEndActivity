@@ -1,22 +1,13 @@
-import ProductData from "./ProductData.mjs";
-import ProductListing from "./ProductList";
-import { loadHeaderFooter } from "./utils.mjs";
-import { renderCartSuperScript } from "./cartSuperscript.js";
+import ProductData from './ProductData.mjs';
+import ProductList from './ProductList.js';
+import { loadHeaderFooter, getParams } from './utils.mjs';
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadHeaderFooter(renderCartSuperScript);
+  loadHeaderFooter();
+
+  const category = getParams('category');
+  const dataSource = new ProductData();
+  const listElement = document.querySelector('.product-list');
+  const myList = new ProductList(category, dataSource, listElement);
+  myList.init();
 });
-
-const listElement = document.getElementById("product-list");
-
-// Tents
-const hiddenTentIds = ["989CG", "880RT"];
-const tentsData = new ProductData("tents");
-const tentsListing = new ProductListing(
-  "tents",
-  tentsData,
-  listElement,
-  hiddenTentIds,
-);
-
-tentsListing.init();
