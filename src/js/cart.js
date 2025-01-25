@@ -5,7 +5,6 @@ import { renderCartSuperScript } from "./cartSuperscript.js";
 document.addEventListener("DOMContentLoaded", () => {
   loadHeaderFooter(renderCartSuperScript);
 });
-
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));

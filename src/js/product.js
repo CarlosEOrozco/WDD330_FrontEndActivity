@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadHeaderFooter(renderCartSuperScript);
 });
 
+
 const dataSource = new ProductData();
 const product = new ProductDetails({
   productId: getParams("product"),

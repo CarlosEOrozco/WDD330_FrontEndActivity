@@ -13,3 +13,4 @@ export function renderCartSuperScript() {
     cartSuperScriptTemplate(cartItems.length),
   );
 }
+
