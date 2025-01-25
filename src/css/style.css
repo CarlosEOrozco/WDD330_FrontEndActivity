@@ -251,6 +251,29 @@ button {
   border-radius: 5px;
 }
 
+.product-types {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+.product-type-link {
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--dark-grey);
+}
+
+.product-type-img {
+  width: 200px;
+  height: 200px;
+}
 
 @media screen and (min-width: 500px) {
   body {
