@@ -274,6 +274,20 @@ button {
   width: 200px;
   height: 200px;
 }
+/*Total style */
+.hide {
+  display: none;
+}
+.cart-footer {
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+  text-align: right;
+}
+.cart-total {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
 
 @media screen and (min-width: 500px) {
   body {
