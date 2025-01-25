@@ -10,6 +10,7 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  updateCartTotal(cartItems);
 }
 
 function cartItemTemplate(item) {
@@ -30,15 +31,26 @@ function cartItemTemplate(item) {
 
   return newItem;
 }
-document.addEventListener("DOMContentLoaded", () => {
+function updateCartTotal(cartItems) {
   const cartFooter = document.querySelector(".cart-footer");
   const cartTotalElement = document.querySelector(".cart-total");
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-  if (cartItems.length > 0){
+
+  if (cartItems.length > 0) {
     cartFooter.classList.remove("hide");
-    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    cartTotalElement.innerHTML = "Total: $${total.toFixed(2)}";
+    const total = cartItems.reduce((sum, item) => {
+      const quantity = item.quantity || 1; 
+      return sum + item.FinalPrice * quantity;
+    }, 0);
+    cartTotalElement.innerHTML = `Total: $${total.toFixed(2)}`;
+  } else {
+    cartFooter.classList.add("hide");
   }
-});
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderCartContents();
+  }
+);
+
 
 renderCartContents();
