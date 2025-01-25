@@ -7,17 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const removeButtons = document.querySelectorAll(".cart-remove-button");
   removeButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const id        = e.target.dataset.id;
-      const cartItems = getLocalStorage("so-cart") || [];
-      const newCart   = cartItems.filter((item) => item.Id !== id);
-
-      setLocalStorage("so-cart", newCart);
-      renderCartContents();
-      renderCartSuperScript();
-    });
+    button.addEventListener("click", removeFromCart);
   });
 });
+
+function removeFromCart(e) {
+  const id        = e.target.dataset.id;
+  const cartItems = getLocalStorage("so-cart") || [];
+  const newCart   = cartItems.filter((item) => item.Id !== id);
+
+  setLocalStorage("so-cart", newCart);
+  renderCartContents();
+  renderCartSuperScript();
+}
 
 function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
