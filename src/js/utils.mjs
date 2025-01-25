@@ -45,7 +45,7 @@ export function renderListWithTemplate(templateFn, parentElement, list, position
 // render template
 export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.insertAdjacentHTML("afterbegin", template);
-  
+
   if (callback) {
     callback(data);
   }
@@ -62,11 +62,11 @@ async function loadTemplate(path) {
 // load header and footer
 export async function loadHeaderFooter(callback) {
 
-  const headerTemplate = await loadTemplate('../partials/header.html');
-  const footerTemplate = await loadTemplate('../partials/footer.html');
+  const headerTemplate = await loadTemplate("../partials/header.html");
+  const footerTemplate = await loadTemplate("../partials/footer.html");
 
-  const headerElement = qs('#main-header');
-  const footerElement = qs('#main-footer');
+  const headerElement = qs("#main-header");
+  const footerElement = qs("#main-footer");
 
   renderWithTemplate(headerTemplate, headerElement, {}, callback);
   renderWithTemplate(footerTemplate, footerElement);
