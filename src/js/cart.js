@@ -30,5 +30,15 @@ function cartItemTemplate(item) {
 
   return newItem;
 }
+document.addEventListener("DOMContentLoaded", () => {
+  const cartFooter = document.querySelector(".cart-footer");
+  const cartTotalElement = document.querySelector(".cart-total");
+  const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+  if (cartItems.length > 0){
+    cartFooter.classList.remove("hide");
+    const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    cartTotalElement.innerHTML = "Total: $${total.toFixed(2)}";
+  }
+});
 
 renderCartContents();
