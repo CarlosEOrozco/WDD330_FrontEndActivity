@@ -4,17 +4,21 @@ import { renderCartSuperScript } from './cartSuperscript.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadHeaderFooter(renderCartSuperScript);
+  renderCartContents();
 
-  const removeButtons = document.querySelectorAll(".cart-remove-button");
-  removeButtons.forEach((button) => {
-    button.addEventListener("click", removeFromCart);
+  // Use event delegation for remove buttons
+  const productList = document.querySelector(".product-list");
+  productList.addEventListener("click", (e) => {
+    if (e.target && e.target.matches("button.cart-remove-button")) {
+      removeFromCart(e);
+    }
   });
 });
 
 function removeFromCart(e) {
-  const id        = e.target.dataset.id;
+  const id = e.target.dataset.id;
   const cartItems = getLocalStorage("so-cart") || [];
-  const newCart   = cartItems.filter((item) => item.Id !== id);
+  const newCart = cartItems.filter((item) => item.Id !== id);
 
   setLocalStorage("so-cart", newCart);
   renderCartContents();
@@ -26,6 +30,8 @@ function renderCartContents() {
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
   updateCartTotal(cartItems);
+
+  // Attach event listeners for quantity inputs
   const quantityInputs = document.querySelectorAll(".cart-card__quantity-input");
   quantityInputs.forEach((input) => {
     input.addEventListener("change", (e) => {
@@ -40,7 +46,7 @@ function cartItemTemplate(item) {
                       <a href="#" class="cart-card__image">
                         <img
                           src="${item.Image}"
-                          alt="${item.Name}"
+                          alt="${item.NameWithoutBrand}"
                         />
                       </a>
                       <a href="#">
@@ -81,10 +87,6 @@ function updateCartTotal(cartItems) {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderCartContents();
-  }
-);
 function updateQuantity(id, newQuantity) {
   const cartItems = getLocalStorage("so-cart") || [];
   const updatedCart = cartItems.map((item) => {
@@ -98,6 +100,3 @@ function updateQuantity(id, newQuantity) {
   renderCartContents(); 
   renderCartSuperScript(); 
 }
-
-
-renderCartContents();
