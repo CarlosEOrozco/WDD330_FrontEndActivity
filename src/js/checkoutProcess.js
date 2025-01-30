@@ -1,11 +1,11 @@
-import { getLocalStorage } from './utils.mjs';
-import ExternalServices from './ExternalServices.mjs';
+import { getLocalStorage } from "./utils.mjs";
+import ExternalServices    from "./ExternalServices.mjs";
 
 export function packageItems(items) {
   return items.map(item => ({
-    id: item.Id,
-    name: item.Name,
-    price: item.FinalPrice,
+    id:       item.Id,
+    name:     item.Name,
+    price:    item.FinalPrice,
     quantity: item.quantity
   }));
 }
@@ -33,18 +33,19 @@ export default class CheckoutProcess {
   }
 
   displaySubtotal() {
-    const subtotalElement = document.getElementById('subtotal');
+    const subtotalElement = document.getElementById("subtotal");
     if (subtotalElement) {
       subtotalElement.textContent = this.itemTotal.toFixed(2);
     }
   }
 
   setupZipCodeListener() {
-    const zipInput = document.getElementById('zipCode');
+    const zipInput = document.getElementById("zipCode");
     if (zipInput) {
-      zipInput.addEventListener('blur', () => {
+      zipInput.addEventListener("input", () => {
         const zipCode = zipInput.value.trim();
-        if (zipCode !== '') {
+
+        if (zipCode !== "") {
           this.calculateOrderTotal();
         }
       });
@@ -64,9 +65,9 @@ export default class CheckoutProcess {
   }
 
   displayOrderTotals() {
-    const shippingElement = document.getElementById('shipping');
-    const taxElement = document.getElementById('tax');
-    const totalElement = document.getElementById('total');
+    const shippingElement = document.getElementById("shipping");
+    const taxElement      = document.getElementById("tax");
+    const totalElement    = document.getElementById("total");
 
     if (shippingElement) {
       shippingElement.textContent = this.shipping.toFixed(2);
@@ -82,35 +83,35 @@ export default class CheckoutProcess {
   async checkout(form) {
     const formData = new FormData(form);
     const formJSON = {};
-  
+
     formData.forEach((value, key) => {
       formJSON[key] = value;
     });
-  
+
     const orderData = {
-      orderDate: new Date().toISOString(),
-      fname: formJSON.firstName,
-      lname: formJSON.lastName,
-      street: formJSON.streetAddress,
-      city: formJSON.city,
-      state: formJSON.state,
-      zip: formJSON.zipCode,
-      cardNumber: formJSON.cardNumber, 
-      expiration: formJSON.expDate, 
-      code: formJSON.secCode, 
-      items: packageItems(this.list),
+      orderDate:  new Date().toISOString(),
+      fname:      formJSON.fname,
+      lname:      formJSON.lname,
+      street:     formJSON.street,
+      city:       formJSON.city,
+      state:      formJSON.state,
+      zip:        formJSON.zip,
+      cardNumber: formJSON.cardNumber,
+      expiration: formJSON.expiration,
+      code:       formJSON.code,
+      items:      packageItems(this.list),
       orderTotal: this.orderTotal.toFixed(2),
-      shipping: this.shipping,
-      tax: this.tax.toFixed(2)
+      shipping:   this.shipping,
+      tax:        this.tax.toFixed(2),
     };
-  
-    console.log("Order data:", orderData); // Log the order data
-  
+
     try {
       const response = await this.externalServices.checkout(orderData);
+
       return response;
     } catch (error) {
-      console.error('Error submitting order:', error);
+      console.error("Error submitting order:", error); // eslint-disable-line no-console
+
       throw error;
     }
   }
