@@ -326,6 +326,7 @@ button {
   flex-direction: row;
   align-items: center;
   margin-top: 15px;
+  gap: 15px;
 }
 
 .form-group label {
@@ -337,7 +338,7 @@ button {
 
 .form-group input {
   flex: 1;
-  padding: 10px;
+  padding: 2px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1em;
