@@ -107,11 +107,14 @@ export default class CheckoutProcess {
 
     try {
       const response = await this.externalServices.checkout(orderData);
-
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw { name: 'servicesError', message: errorData };
+      }
       return response;
     } catch (error) {
       console.error("Error submitting order:", error); // eslint-disable-line no-console
-
+      alert(`An error occurred: ${error.message}`);
       throw error;
     }
   }
