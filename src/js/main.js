@@ -1,4 +1,4 @@
-import ProductData    from "./ProductData.mjs";
+import ExternalServices    from "./ExternalServices.mjs";
 import ProductListing from "./ProductList";
 import { loadHeaderFooter } from "./utils.mjs";
 import { renderCartSuperScript } from "./cartSuperscript.js";
@@ -11,7 +11,7 @@ const listElement = document.getElementById("product-list");
 
 // Tents
 const hiddenTentIds = ["989CG", "880RT"]
-const tentsData     = new ProductData("tents");
+const tentsData     = new ExternalServices("tents");
 const tentsListing  = new ProductListing("tents", tentsData, listElement, hiddenTentIds);
 
 tentsListing.init();
