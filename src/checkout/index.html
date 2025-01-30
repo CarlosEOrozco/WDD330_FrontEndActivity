@@ -8,18 +8,74 @@
 
     <title>Sleep Outside | Checkout</title>
 
-    <link rel="stylesheet" href="css/style.css" />
-    <script src="../js/checkout.js" type="module"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <script src="../js/ExternalServices.mjs" type="module"></script>
+    <script src="../js/checkoutProcess.js" type="module"></script>
     <script src="../js/cartSuperscript.js" type="module"></script>
+    <script src="../js/checkout.js" type="module"></script>
   </head>
 
   <body>
     <header class="divider" id="main-header"></header>
 
     <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
+      <!-- Checkout form and order summary will be injected here by checkout.js -->
+      <form id="checkoutForm" class="checkout-form">
+        <h1>Review & Place Your Order</h1>
+
+        <h3>Customer Information</h3>
+
+        <label for="firstName" class="form-group">
+          First Name
+          <input id="firstName" name="fname" type="text" required />
+        </label>
+
+        <label for="lastName" class="form-group">
+          Last Name
+          <input id="lastName" name="lname" type="text" required />
+        </label>
+
+        <label for="streetAddress" class="form-group">
+          Street Address
+          <input id="streetAddress" name="street" type="text" required />
+        </label>
+
+        <label for="city" class="form-group">
+          City
+          <input id="city" name="city" type="text" required />
+        </label>
+
+        <label for="state" class="form-group">
+          State
+          <input id="state" name="state" type="text" required />
+        </label>
+
+        <label for="zipCode" class="form-group">
+          Zip Code
+          <input id="zipCode" name="zip" type="text" required />
+        </label>
+
+        <hr>
+
+        <h3>Payment Information</h3>
+
+        <label for="cardNumber" class="form-group">
+          Credit Card Number
+          <input id="cardNumber" name="cardNumber" type="text" maxlength="16" placeholder="Enter 16-digit number" pattern="\d{16}" required />
+        </label>
+
+        <label for="expDate" class="form-group">
+          Expiration Date
+          <input id="expDate" name="expiration" type="text" maxlength="5" placeholder="MM/YY" pattern="([1-9]|1[0-2])\/\d{2}" required />
+        </label>
+
+        <label for="secCode" class="form-group">
+          Security Code
+          <input id="secCode" name="code" type="text" placeholder="123" maxlength="3" pattern="\d{3}" required />
+        </label>
+
+        <button class="checkout-button">Checkout</button>
+      </form>
     </main>
 
     <footer id="main-footer"></footer>

@@ -289,6 +289,80 @@ button {
   color: #333;
 }
 
+/* Checkout Button Styles */
+.checkout-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.checkout-button:hover {
+  background-color: #218838;
+}
+
+/* Checkout Form Styles */
+.checkout-form {
+  max-width: 600px;
+  margin: 40px auto; /* Increased top and bottom margin for spacing */
+  padding: 20px; /* Added padding inside the form container */
+  border: 1px solid #ddd; /* Added border for visual separation */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #f9f9f9; /* Light background color */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.checkout-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Form Group Styles */
+.form-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15px;
+  gap: 15px;
+}
+
+.form-group label {
+  width: 150px; /* Fixed width for labels */
+  margin-right: 15px; /* Space between label and input */
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input {
+  flex: 1;
+  padding: 2px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #28a745;
+  outline: none;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.3);
+}
+
+/* Order Summary Styles */
+.order-summary {
+  max-width: 300px;
+  width: 100%;
+  margin: 40px auto 0 auto; /* Top margin and auto margins for centering */
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
