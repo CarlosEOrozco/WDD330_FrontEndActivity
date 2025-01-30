@@ -401,6 +401,28 @@ button {
   background-color: var(--secondary-color);
 }
 
+/* Alert Message Styles */
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert .close-alert {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #721c24;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;

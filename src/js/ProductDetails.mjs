@@ -34,6 +34,9 @@ export default class ProductDetails {
     }
 
     setLocalStorage("so-cart", cartItems);
+
+    // Alert the user that the product was added to the cart
+    alert(`${this.product.NameWithoutBrand} has been added to your cart.`);
   }
 
   renderProductDetails() {
