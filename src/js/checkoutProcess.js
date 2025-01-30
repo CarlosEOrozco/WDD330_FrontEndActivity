@@ -1,4 +1,14 @@
 import { getLocalStorage } from './utils.mjs';
+import ExternalServices from './ExternalServices.mjs';
+
+export function packageItems(items) {
+  return items.map(item => ({
+    id: item.Id,
+    name: item.Name,
+    price: item.FinalPrice,
+    quantity: item.quantity
+  }));
+}
 
 export default class CheckoutProcess {
   constructor(key) {
@@ -8,6 +18,7 @@ export default class CheckoutProcess {
     this.shipping = 0;
     this.tax = 0;
     this.orderTotal = 0;
+    this.externalServices = new ExternalServices();
   }
 
   init() {
@@ -65,6 +76,42 @@ export default class CheckoutProcess {
     }
     if (totalElement) {
       totalElement.textContent = this.orderTotal.toFixed(2);
+    }
+  }
+
+  async checkout(form) {
+    const formData = new FormData(form);
+    const formJSON = {};
+  
+    formData.forEach((value, key) => {
+      formJSON[key] = value;
+    });
+  
+    const orderData = {
+      orderDate: new Date().toISOString(),
+      fname: formJSON.firstName,
+      lname: formJSON.lastName,
+      street: formJSON.streetAddress,
+      city: formJSON.city,
+      state: formJSON.state,
+      zip: formJSON.zipCode,
+      cardNumber: formJSON.cardNumber, 
+      expiration: formJSON.expDate, 
+      code: formJSON.secCode, 
+      items: packageItems(this.list),
+      orderTotal: this.orderTotal.toFixed(2),
+      shipping: this.shipping,
+      tax: this.tax.toFixed(2)
+    };
+  
+    console.log("Order data:", orderData); // Log the order data
+  
+    try {
+      const response = await this.externalServices.checkout(orderData);
+      return response;
+    } catch (error) {
+      console.error('Error submitting order:', error);
+      throw error;
     }
   }
 }

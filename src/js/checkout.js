@@ -1,6 +1,6 @@
 import { loadHeaderFooter, getLocalStorage, setLocalStorage } from './utils.mjs';
 import { renderCartSuperScript } from './cartSuperscript.js';
-import CheckoutProcess from './checkoutProcess.js';
+import CheckoutProcess, { packageItems } from './checkoutProcess.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadHeaderFooter(renderCartSuperScript);
@@ -10,6 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize CheckoutProcess
     const checkout = new CheckoutProcess("so-cart");
     checkout.init();
+
+    // Pass the checkout instance to the form submission handler
+    const form = document.getElementById('checkoutForm');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        await handleCheckout(event, checkout);
+    });
 });
 
 function createCheckoutForm() {
@@ -41,22 +48,17 @@ function createCheckoutForm() {
     ];
 
     customerFields.forEach(field => {
-        const formGroup = document.createElement('div');
-        formGroup.classList.add('form-group');
-
         const label = document.createElement('label');
-        label.htmlFor = field.id;
-        label.textContent = `${field.label}:`;
-        formGroup.appendChild(label);
+        label.textContent = field.label;
+        label.setAttribute('for', field.id);
 
         const input = document.createElement('input');
         input.type = field.type;
         input.id = field.id;
-        input.name = field.id;
-        input.required = true;
-        formGroup.appendChild(input);
+        input.name = field.id; // Ensure the name attribute matches the key in formJSON
 
-        customerFieldset.appendChild(formGroup);
+        customerFieldset.appendChild(label);
+        customerFieldset.appendChild(input);
     });
 
     form.appendChild(customerFieldset);
@@ -68,31 +70,26 @@ function createCheckoutForm() {
     paymentFieldset.appendChild(paymentLegend);
 
     const paymentFields = [
-        { label: 'Credit Card Number', id: 'ccNumber', type: 'text' },
+        { label: 'Credit Card Number', id: 'cardNumber', type: 'text' }, // Ensure the id and name match the key in formJSON
         { label: 'Expiration Date', id: 'expDate', type: 'text', placeholder: 'MM/YY' },
         { label: 'Security Code', id: 'secCode', type: 'text' },
     ];
 
     paymentFields.forEach(field => {
-        const formGroup = document.createElement('div');
-        formGroup.classList.add('form-group');
-
         const label = document.createElement('label');
-        label.htmlFor = field.id;
-        label.textContent = `${field.label}:`;
-        formGroup.appendChild(label);
+        label.textContent = field.label;
+        label.setAttribute('for', field.id);
 
         const input = document.createElement('input');
         input.type = field.type;
         input.id = field.id;
-        input.name = field.id;
-        input.required = true;
+        input.name = field.id; // Ensure the name attribute matches the key in formJSON
         if (field.placeholder) {
             input.placeholder = field.placeholder;
         }
-        formGroup.appendChild(input);
 
-        paymentFieldset.appendChild(formGroup);
+        paymentFieldset.appendChild(label);
+        paymentFieldset.appendChild(input);
     });
 
     form.appendChild(paymentFieldset);
@@ -105,9 +102,6 @@ function createCheckoutForm() {
 
     checkoutSection.appendChild(form);
     main.appendChild(checkoutSection);
-
-    // Form Submission Handler
-    form.addEventListener('submit', handleCheckout);
 }
 
 function populateOrderSummary() {
@@ -143,18 +137,52 @@ function populateOrderSummary() {
     main.appendChild(summarySection);
 }
 
-function handleCheckout(event) {
-    event.preventDefault();
+async function handleCheckout(event, checkout) {
     const form = event.target;
 
     if (form.checkValidity()) {
-        // In a real application, here you would send the data to the server
-        alert('Order placed successfully!');
-        // Clear cart
-        setLocalStorage("so-cart", []);
-        renderCartSuperScript();
-        // Redirect to home or confirmation page
-        window.location.href = "../index.html";
+        // Gather form data
+        const formData = new FormData(form);
+        const formJSON = {};
+
+        formData.forEach((value, key) => {
+            formJSON[key] = value;
+        });
+
+        // Prepare the data object
+        const orderData = {
+            orderDate: new Date().toISOString(),
+            fname: formJSON.firstName,
+            lname: formJSON.lastName,
+            street: formJSON.streetAddress,
+            city: formJSON.city,
+            state: formJSON.state,
+            zip: formJSON.zipCode,
+            cardNumber: formJSON.ccNumber, // For testing; replace with formJSON.ccNumber
+            expiration: formJSON.expDate, // For testing; replace with formJSON.expDate
+            code: formJSON.secCode, // For testing; replace with formJSON.secCode
+            items: packageItems(checkout.list),
+            orderTotal: checkout.orderTotal.toFixed(2),
+            shipping: checkout.shipping,
+            tax: checkout.tax.toFixed(2)
+        };
+
+        try {
+            // Submit order
+            const response = await checkout.checkout(form);
+            if (response.success) {
+                alert('Order placed successfully!');
+                // Clear cart
+                setLocalStorage("so-cart", []);
+                renderCartSuperScript();
+                // Redirect to confirmation page or home
+                window.location.href = "../index.html";
+            } else {
+                alert('Failed to place order. Please try again.');
+            }
+        } catch (error) {
+            alert('An error occurred while placing your order. Please try again later.');
+        }
     } else {
         alert('Please fill out all required fields.');
     }
