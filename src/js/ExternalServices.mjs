@@ -1,4 +1,4 @@
-const baseURL = "http://server-nodejs.cit.byui.edu:3000/";
+const baseURL = import.meta.env.VITE_SERVER_URL;
 
 function convertToJson(res) {
   if (res.ok) {
@@ -9,11 +9,6 @@ function convertToJson(res) {
 }
 
 export default class ExternalServices {
-  constructor(category) {
-    // this.category = category;
-    // this.path = `../json/${this.category}.json`;
-  }
-
   async getData(category) {
     const response = await fetch(baseURL + `products/search/${category}`);
     const data = await convertToJson(response);
@@ -34,7 +29,7 @@ export default class ExternalServices {
       },
       body: JSON.stringify(payload),
     };
-    console.log("Checkout payload:", payload); // Log the payload
-    return await fetch(baseURL + "checkout/", options).then(convertToJson);
+
+    return await fetch(baseURL + "checkout/", options);
   }
 }
