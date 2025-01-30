@@ -1,6 +1,6 @@
 import { loadHeaderFooter, setLocalStorage } from "./utils.mjs";
-import { renderCartSuperScript }             from "./cartSuperscript.js";
-import CheckoutProcess                       from "./checkoutProcess.js";
+import { renderCartSuperScript } from "./cartSuperscript.js";
+import CheckoutProcess from "./checkoutProcess.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     loadHeaderFooter(renderCartSuperScript);
@@ -97,8 +97,8 @@ async function handleCheckout(event, checkout) {
                 // Clear cart
                 setLocalStorage("so-cart", []);
                 renderCartSuperScript();
-                // Redirect to confirmation page or home
-                window.location.href = "../index.html";
+                // Redirect to success page
+                window.location.href = "./success.html";
             } else {
                 alert("Failed to place order. Please try again.");
             }
