@@ -1,10 +1,15 @@
 import { loadHeaderFooter, getLocalStorage, setLocalStorage } from './utils.mjs';
 import { renderCartSuperScript } from './cartSuperscript.js';
+import CheckoutProcess from './checkoutProcess.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadHeaderFooter(renderCartSuperScript);
     createCheckoutForm();
     populateOrderSummary();
+
+    // Initialize CheckoutProcess
+    const checkout = new CheckoutProcess("so-cart");
+    checkout.init();
 });
 
 function createCheckoutForm() {
@@ -136,28 +141,6 @@ function populateOrderSummary() {
 
     summarySection.appendChild(summaryList);
     main.appendChild(summarySection);
-
-    // Calculate and Display Totals
-    const cartItems = getLocalStorage("so-cart") || [];
-    const subtotal = cartItems.reduce((sum, item) => sum + item.FinalPrice * item.quantity, 0);
-    const shipping = calculateShipping(subtotal);
-    const tax = calculateTax(subtotal);
-    const total = subtotal + shipping + tax;
-
-    document.getElementById('subtotal').textContent = subtotal.toFixed(2);
-    document.getElementById('shipping').textContent = shipping.toFixed(2);
-    document.getElementById('tax').textContent = tax.toFixed(2);
-    document.getElementById('total').textContent = total.toFixed(2);
-}
-
-function calculateShipping(subtotal) {
-    // Example shipping calculation
-    return subtotal > 100 ? 0 : 10;
-}
-
-function calculateTax(subtotal) {
-    const taxRate = 0.08; // 8% tax
-    return subtotal * taxRate;
 }
 
 function handleCheckout(event) {
