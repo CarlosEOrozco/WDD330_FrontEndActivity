@@ -98,7 +98,7 @@ async function handleCheckout(event, checkout) {
                 setLocalStorage("so-cart", []);
                 renderCartSuperScript();
                 // Redirect to confirmation page or home
-                window.location.href = "../index.html";
+                window.location.href = "./success.html";
             } else {
                 alert("Failed to place order. Please try again.");
             }
