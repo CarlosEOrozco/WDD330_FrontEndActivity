@@ -1,6 +1,6 @@
-import { loadHeaderFooter, setLocalStorage } from "./utils.mjs";
-import { renderCartSuperScript }             from "./cartSuperscript.js";
-import CheckoutProcess                       from "./checkoutProcess.js";
+import { loadHeaderFooter, setLocalStorage, alertMessage } from "./utils.mjs";
+import { renderCartSuperScript } from "./cartSuperscript.js";
+import CheckoutProcess from "./checkoutProcess.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     loadHeaderFooter(renderCartSuperScript);
@@ -84,8 +84,7 @@ async function handleCheckout(event, checkout) {
         });
 
         if (cardIsExpired(formJSON.expiration)) {
-            alert("Your card is expired");
-
+            alertMessage("Your card is expired");
             return;
         }
 
@@ -97,15 +96,15 @@ async function handleCheckout(event, checkout) {
                 // Clear cart
                 setLocalStorage("so-cart", []);
                 renderCartSuperScript();
-                // Redirect to confirmation page or home
-                window.location.href = "../index.html";
+                // Redirect to success page
+                window.location.href = "./success.html";
             } else {
-                alert("Failed to place order. Please try again.");
+                alertMessage("Failed to place order. Please try again.");
             }
         } catch (error) {
-            alert("An error occurred while placing your order. Please try again later.");
+            alertMessage("An error occurred while placing your order. Please try again later.");
         }
     } else {
-        alert("Please fill out all required fields.");
+        alertMessage("Please fill out all required fields.");
     }
 }

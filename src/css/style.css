@@ -363,6 +363,66 @@ button {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Success Page Styles */
+.success-message {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.success-message h1 {
+  color: var(--secondary-color);
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.success-message p {
+  font-size: 1.2em;
+  color: var(--dark-grey);
+  margin-bottom: 20px;
+}
+
+.success-message a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+.success-message a:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Alert Message Styles */
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.alert .close-alert {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #721c24;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
