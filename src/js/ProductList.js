@@ -16,6 +16,7 @@ function productCardTemplate(product) {
                 <span class="new-price">$${product.FinalPrice}</span>
               </p>
             </a>
+            <button class="quick-view-button" data-id="${product.Id}">Quick View</button>
           </li>`;
 }
 
@@ -32,6 +33,7 @@ export default class ProductListing {
     const filteredList = this.filterList(list)
 
     this.renderList(filteredList);
+    this.addQuickViewEventListeners();
   }
 
   renderList(list) {
@@ -40,5 +42,40 @@ export default class ProductListing {
 
   filterList(list) {
     return list.filter(item => !this.hiddenProductIds.includes(item.Id))
+  }
+
+  addQuickViewEventListeners() {
+    const buttons = document.querySelectorAll(".quick-view-button");
+    buttons.forEach(button => {
+      button.addEventListener("click", async (event) => {
+        const productId = event.target.dataset.id;
+        try {
+          const product = await this.dataSource.findProductById(productId);
+          this.showQuickViewModal(product);
+        } catch (error) {
+          console.error("Error fetching product data:", error); 
+        }
+      });
+    });
+  }
+
+  showQuickViewModal(product) {
+    const modal = document.getElementById("quick-view-modal");
+    const modalContent = document.getElementById("quick-view-modal-content");
+
+    const description = product.DescriptionHtmlSimple || "No description available.";
+
+    modalContent.innerHTML = `
+      <h2>${product.NameWithoutBrand}</h2>
+      <img src="${product.Images.PrimaryMedium}" alt="${product.NameWithoutBrand}">
+      <p>${description}</p>
+      <p>Price: $${product.FinalPrice}</p>
+      <button id="close-modal">Close</button>
+    `;
+    modal.style.display = "block";
+
+    document.getElementById("close-modal").addEventListener("click", () => {
+      modal.style.display = "none";
+    });
   }
 }
